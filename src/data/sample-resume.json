@@ -1,0 +1,114 @@
+{
+  "name": "Kelvin Quarcoo",
+  "title": "Frontend Developer",
+  "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww",
+  "summary": "Passionate frontend developer with 3+ years of experience building responsive and accessible web applications using React, Next.js, and Tailwind CSS.",
+  "contact": {
+    "email": "kelvin@example.com",
+    "phone": "+233 20 123 4567",
+    "location": "Accra, Ghana",
+    "linkedin": "kelvinquarcoo",
+    "github": "quarcoo",
+    "website": "https://kelvinquarcoo.dev"
+  },
+  "profiles": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/quarcoo",
+      "username": "quarcoo"
+    },
+    {
+      "platform": "Stack Overflow",
+      "url": "https://stackoverflow.com/quarcoo",
+      "username": "howmw"
+    }
+  ],
+"education": [
+  {
+    "school": "University of Ghana",
+    "location": "Accra, Ghana",
+    "degree": "BSc Computer Science",
+    "startDate": "2020",
+    "endDate": "2024",
+    "honors": "First Class Honors",
+    "relevantCoursework": [
+      "Data Structures & Algorithms",
+      "Web Development",
+      "Database Systems",
+      "Artificial Intelligence"
+    ]
+  },
+  {
+    "school": "FreeCodeCamp",
+    "location": "Online",
+    "degree": "Full Stack JavaScript Certification",
+    "startDate": "2022",
+    "endDate": "2023",
+    "url": "https://freecodecamp.org/certification/fcc123456789/javascript-algorithms-and-data-structures"
+  }
+],
+  "experience": [
+  {
+    "company": "TechBridge Africa",
+    "role": "Frontend Developer Intern",
+    "startDate": "Jun 2023",
+    "endDate": "Sep 2023",
+    "location": "Accra, Ghana (Remote)",
+    "url": "https://techbridgeafrica.org",
+    "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
+    "highlights": [
+    "Built and maintained reusable React components",
+    "Implemented responsive layouts with Tailwind CSS",
+    "Collaborated with backend developers on API integration"
+    ]
+},
+  {
+    "company": "DevHub Africa",
+    "role": "Junior Frontend Developer",
+    "startDate": "Oct 2023",
+    "endDate": "Present",
+    "location": "Lagos, Nigeria (Hybrid)",
+    "url": "https://devhubafrica.com",
+    "highlights": [
+      "Led migration from JavaScript to TypeScript across 3 major projects",
+      "Implemented CI/CD pipelines reducing deployment time by 60%",
+      "Mentored 2 new interns on React best practices",
+      "Designed and implemented a component library used by 15+ developers"
+    ]
+  }
+],
+"skills": [
+  {
+    "category": "Frontend",
+    "level": "Advanced",
+    "items": ["React", "Next.js", "Tailwind CSS"]
+  },
+  {
+    "category": "Languages",
+    "level": "Proficient",
+    "items": ["JavaScript", "TypeScript"]
+  }
+],
+  "projects": [
+    {
+      "title": "Resume Builder App",
+      "description": "A web application that allows users to build professional resumes using dynamic templates.",
+      "url": "https://ceevie.vercel.app",
+      "role": "Lead Developer"
+    }
+  ],
+  "certifications": ["Google UX Design – 2022", "Meta Front-End Professional – 2023"],
+  "languages": [
+  { "name": "English", "proficiency": "Native" },
+  { "name": "French", "proficiency": "Intermediate" },
+  { "name": "Twi", "proficiency": "Fluent" }
+],
+  "hobbies": ["Reading", "Hackathons", "Volunteering"],
+  "references": [
+    {
+      "name": "Jane Doe",
+      "position": "CTO at DevX",
+      "contact": "jane.doe@example.com"
+    }
+  ]
+}
