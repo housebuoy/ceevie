@@ -5,6 +5,7 @@ import {
   LibraryBig,
   ChevronUp,
 } from 'lucide-react'
+import {IoCloudUploadOutline } from 'react-icons/io5'
 import { IoDocumentsOutline } from 'react-icons/io5'
 import {
   Sidebar,
@@ -31,20 +32,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// const user = {
-//   name: 'Kelvin Quarcoo',
-//   email: 'kelvin@example.com',
-//   avatar: '/images/avatar.png',
-// }
-
 const items = [
   { title: 'Resume', url: '/dashboard/home', icon: IoDocumentsOutline },
   { title: 'Template Library', url: '/dashboard/library', icon: LibraryBig },
+  { title: 'Uploads', url: '/dashboard/uploads', icon: IoCloudUploadOutline  },
   { title: 'Settings', url: '#', icon: Settings },
 ]
 
 export function HomeSidebar() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   return (
     <>
       {/* Desktop Sidebar */}
@@ -87,20 +83,48 @@ export function HomeSidebar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="w-full cursor-pointer flex items-center gap-3 hover:bg-[#1a1a1a] px-2 py-2 rounded-md">
+                {/* Avatar */}
                 <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src={user?.photoURL || ''}
-                    alt={user?.displayName || ''}
-                  />
-                  <AvatarFallback>
-                    {user?.displayName?.slice(0, 2) || 'U'}
-                  </AvatarFallback>
+                  {loading ? (
+                    <div className="h-8 w-8 rounded-full bg-[#1a1a1a] animate-pulse" />
+                  ) : (
+                    <>
+                      <AvatarImage
+                        src={user?.photoURL || ''}
+                        alt={user?.displayName || ''}
+                      />
+                      <AvatarFallback>
+                        {user?.displayName?.slice(0, 2) || 'U'}
+                      </AvatarFallback>
+                    </>
+                  )}
                 </Avatar>
+
+                {/* Text */}
                 <div className="flex flex-col text-xs text-left overflow-hidden">
-                  <span className="font-semibold" title={user?.displayName ?? undefined}>{user?.displayName}</span>
-                  <span className="text-gray-400" title={user?.email ?? undefined}>{user?.email}</span>
+                  {loading ? (
+                    <>
+                      <div className="h-3 w-24 bg-[#1a1a1a] rounded animate-pulse mb-1" />
+                      <div className="h-3 w-40 bg-[#1a1a1a] rounded animate-pulse" />
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-semibold" title={user?.displayName ?? undefined}>
+                        {user?.displayName}
+                      </span>
+                      <span className="text-gray-400" title={user?.email ?? undefined}>
+                        {user?.email}
+                      </span>
+                    </>
+                  )}
                 </div>
-                <ChevronUp className="ml-auto h-4 w-4" />
+
+                {/* Chevron */}
+                {loading ? (
+                  <div className="ml-auto h-4 w-4 bg-[#1a1a1a] rounded animate-pulse" />
+                ) : (
+                  <ChevronUp className="ml-auto h-4 w-4" />
+                )}
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[200px] bg-[#1a1a1a] text-white rounded-md shadow-md mt-1 p-2">

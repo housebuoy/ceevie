@@ -8,16 +8,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { IoCloudUpload, IoClose } from "react-icons/io5";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress"; // ShadCN Progress
 import { cn } from "@/lib/utils"; // optional for class merging
+import { useAuth } from '@/context/AuthContext'
+import { MdFileCopy } from "react-icons/md";
 
-export default function ImportResumeModal() {
+interface ImportResumeModalProps {
+  initialFile?: File | null;
+  onClose?: () => void;
+  hideTrigger?: boolean;
+}
+
+export default function ImportResumeModal({ initialFile, onClose, hideTrigger }: ImportResumeModalProps) {
   const [file, setFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { appUser } = useAuth();
+
+  useEffect(() => {
+    if (initialFile) setFile(initialFile);
+  }, [initialFile]);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -38,39 +51,60 @@ export default function ImportResumeModal() {
   };
 
   const handleImport = () => {
-    if (!file) return;
+  if (!file) return;
 
-    setIsUploading(true);
-    setUploadProgress(0);
+  setIsUploading(true);
+  setUploadProgress(0);
 
-    // Simulate upload
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setIsUploading(false);
-          }, 500);
-        }
-        return Math.min(prev + 10, 100);
-      });
-    }, 200);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("userId", appUser?._id ?? "");
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/api/upload");
+
+  xhr.upload.onprogress = (event) => {
+    if (event.lengthComputable) {
+      const percent = Math.round((event.loaded / event.total) * 100);
+      setUploadProgress(percent);
+    }
   };
 
+  xhr.onload = () => {
+    setIsUploading(false);
+    if (xhr.status === 200) {
+      setUploadProgress(100);
+      setFile(null);
+      // Optionally, handle response: JSON.parse(xhr.responseText)
+    } else {
+      alert("Upload failed. Please try again.");
+    }
+  };
+
+  xhr.onerror = () => {
+    setIsUploading(false);
+    alert("Upload failed. Please try again.");
+  };
+
+  xhr.send(formData);
+};
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <button
-          className="w-36 h-44 bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] cursor-pointer flex flex-col items-center justify-center gap-3"
-        >
-          <IoCloudUpload className="w-10 h-10" />
-          <p className="text-sm font-medium text-white text-center">
-            Import from existing
-            <br />
-            <span className="text-xs text-gray-400">(PDF, DOCX, JSON)</span>
-          </p>
-        </button>
-      </DialogTrigger>
+    <Dialog onOpenChange={open => { if (!open && onClose) onClose(); }}>
+      {!hideTrigger && (
+        <DialogTrigger asChild>
+          <button
+              className="rounded-lg cursor-pointer border border-gray-700 bg-[#181818] hover:bg-[#232323] p-6 flex flex-col items-center transition group focus:outline-none"
+            >
+              <div className="flex flex-col items-center gap-2 mb-2">
+              <MdFileCopy className="text-indigo-400 text-2xl text-center" />
+              <span className="font-semibold text-lg text-center w-full">Upload New</span>
+              </div>
+              <span className="text-xs text-gray-400 text-center">
+              Import a new resume file (PDF, DOCX, JSON).
+              </span>
+          </button>
+        </DialogTrigger>
+      )}
 
       <DialogContent className="bg-[#0d0d0d] border border-gray-700 text-white rounded-md w-full max-w-md">
         <DialogHeader className="mb-4 flex justify-between items-center">
@@ -134,7 +168,7 @@ export default function ImportResumeModal() {
         {/* Action Button */}
         <Button
           onClick={handleImport}
-          disabled={!file || isUploading}
+          disabled={!file || isUploading || !appUser?._id}
           className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white w-full"
         >
           {isUploading ? "Uploading..." : "Upload & Import"}

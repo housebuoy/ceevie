@@ -1,15 +1,12 @@
 'use client'
 import { LuPlus } from "react-icons/lu";
 import React from 'react'
-import ImportResumeModal from "@/app/components/Modals/ImportResume";
-import ProtectedRoute from '@/app/components/ProtectedRoute';
-
 import { useRouter } from 'next/navigation';
+import ImportResumeChooserModal from "@/app/components/Modals/ImportResumeChooser";
 
 const Home = () => {
   const router = useRouter();
   return (
-    <ProtectedRoute>
       <div className="pl-12 w-full">
           <div className="pt-16">
               <h1 className="text-2xl font-semibold">Get Started</h1>
@@ -17,14 +14,15 @@ const Home = () => {
           </div>
           <div className="mt-6 flex items-center gap-4">
               <button
-                className="w-36 h-44 bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] cursor-pointer flex flex-col items-center justify-center gap-3"
+                className="w-36  h-44 bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] cursor-pointer flex flex-col items-center justify-center gap-3"
               onClick={() => router.push('/dashboard/library')}>
                 <LuPlus className="w-10 h-10 text-4xl" />
                 <p className="text-sm font-medium text-white text-center">
                   Create New
                 </p>
-              </button>       
-              <ImportResumeModal />
+              </button>
+              {/* <ImportResumeModal />      */}
+              <ImportResumeChooserModal triggerClassName="w-36 h-44 bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] cursor-pointer flex flex-col items-center justify-center gap-3" />
           </div>
           <div className="mt-6 w-full">
             <h1 className="text-2xl font-semibold">Recents</h1>
@@ -38,7 +36,6 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         </div>
       </div>
-    </ProtectedRoute>
   )
 }
 
