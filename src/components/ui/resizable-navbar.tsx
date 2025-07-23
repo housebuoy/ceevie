@@ -230,7 +230,7 @@ export const MobileNavToggle = ({
   );
 };
 
-export const NavbarLogo = () => {
+export const  NavbarLogo = () => {
   return (
     <a
       href="#"
