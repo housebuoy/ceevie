@@ -11,9 +11,13 @@ import {
   FiAward,
   FiGlobe
 } from "react-icons/fi";
-import { Resume } from "@/types/resume";
+import { useResume } from "@/context/ResumeContext";
 
-export function TwoColumnTemplate({ resume }: { resume: Resume }) {
+
+export function TwoColumnTemplate() {
+  const { resume } = useResume();
+
+  
   return (
     <div className="w-[794px] h-[1123px] bg-white text-black font-sans text-sm px-6 py-8">
       <div className="flex h-full gap-6">
@@ -164,6 +168,21 @@ export function TwoColumnTemplate({ resume }: { resume: Resume }) {
                   <p>{ref.contact}</p>
                 </div>
               ))}
+            </div>
+          )}
+          {resume.contact?.customFields && resume.contact.customFields.length > 0 && (
+            <div>
+              <h3 className="font-bold text-gray-700">Custom Fields</h3>
+              <ul className="list-disc list-inside">
+                {resume.contact.customFields.map((field, i) => (
+                  <li key={field.key || i} className="flex items-center gap-2">
+                    {field.label.toLowerCase().includes("github") && <FiGithub />}
+                    {field.label.toLowerCase().includes("linkedin") && <FiLinkedin />}
+                    {/* ...add more icons as needed */}
+                    <span className="font-semibold">{field.label}:</span> {field.value}
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </section>

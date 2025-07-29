@@ -69,6 +69,7 @@
     "endDate": "Present",
     "location": "Lagos, Nigeria (Hybrid)",
     "url": "https://devhubafrica.com",
+    "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
     "highlights": [
       "Led migration from JavaScript to TypeScript across 3 major projects",
       "Implemented CI/CD pipelines reducing deployment time by 60%",

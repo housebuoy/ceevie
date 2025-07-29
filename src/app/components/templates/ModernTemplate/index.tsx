@@ -1,7 +1,8 @@
 // templates/ModernTemplate.tsx
-import { Resume } from "@/types/resume";
+import { useResume } from "@/context/ResumeContext";
 
-export default function ModernTemplate({ resume }: { resume: Resume }) {
+export default function ModernTemplate() {
+  const { resume } = useResume();
   return (
     <div className="px-8 py-8 font-sans bg-white text-black w-[794px] h-[1123px] mx-auto ">
       <h1 className="text-3xl font-bold">{resume.name}</h1>

@@ -1,18 +1,15 @@
-// app/api/users/[authId]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/Users';
 
 export async function GET(
   req: NextRequest,
-  contextPromise: Promise<{ params: { authId: string } }>
+  context: { params: { authId: string } }
 ) {
-  const { params } = await contextPromise;
-  const { authId } = params;
+  const { authId } = await context.params;
 
   try {
     await dbConnect();
-
     const user = await User.findOne({ authId });
 
     if (!user) {
@@ -20,8 +17,12 @@ export async function GET(
     }
 
     return NextResponse.json({ user }, { status: 200 });
-  } catch (error) {
-    console.error('User fetch error:', error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('❌ Server error:', error.message);
+    } else {
+      console.error('❌ Server error:', error);
+    }
     return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }
 }

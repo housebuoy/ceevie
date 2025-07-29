@@ -11,11 +11,17 @@ export interface Resume {
     linkedin?: string;
     github?: string;
     website?: string;
+    customFields?: Array<{
+    label: string;
+    value: string;
+    key?: string;
+  }>;
   };
   profiles: Array<{
     platform: string;
     username: string;
     url: string;
+    iconSlug?: string;
 }
     >;
   education: Array<{
@@ -24,6 +30,8 @@ export interface Resume {
     degree: string;
     startDate: string;
     endDate: string;
+    url?: string;
+    summary?: string;
   }>;
   experience: Array<{
     company: string;
@@ -32,7 +40,7 @@ export interface Resume {
     endDate: string;
     url?: string;
     description: string;
-    highlights: string[];
+    highlights?: string[];
     location?: string;
   }>;
   skills: Array<{
@@ -57,5 +65,13 @@ export interface Resume {
     name: string;
     position: string;
     contact: string;
+  }>;
+  customFields? : Array<{
+    label: string;
+    value: string;
+  }>;
+  customSections?: Array<{
+    title: string;
+    content: string;
   }>;
 }

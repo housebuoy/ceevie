@@ -1,10 +1,12 @@
 // components/templates/CompactResume.tsx
 import React from "react";
-import { Resume } from "@/types/resume";
+import { useResume } from "@/context/ResumeContext";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function CompactResume({ resume }: { resume: Resume }) {
+
+export default function CompactResume() {
+  const { resume } = useResume();
   return (
     <div className="w-[794px] h-[1123px] bg-white font-sans text-sm text-black pt-32 px-10 relative">
       <div className="bg-blue-800 w-screen min-w-[794px] h-24 fixed top-0 left-0"></div>

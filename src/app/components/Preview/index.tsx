@@ -1,32 +1,31 @@
 'use client'
 import { Wand2 } from "lucide-react";
 import React from "react";
-
 interface TemplateCardProps {
   children: React.ReactNode;
   isActive: boolean;
   onClick: () => void;
+  onHover: () => void;
+  onLeave: () => void;
+  onCLickRouter?: () => void;
 }
 
-export function TemplateCard({ children, isActive, onClick }: TemplateCardProps) {
+export function  TemplateCard({ children, isActive, onClick, onHover, onLeave, onCLickRouter }: TemplateCardProps) {
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-
-  const handleClick = () => {
-    if (isMobile) onClick();
-  };
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // ❗ Prevent bubbling
-    console.log("Customise button clicked");
+    if (onCLickRouter) {
+      onCLickRouter();
+    }
   };
 
   return (
     <div
       className="relative group rounded-md border shadow-lg w-fit p-1 bg-white/20 overflow-hidden cursor-pointer"
-      onClick={handleClick}
-      onMouseEnter={() => {
-        if (!isMobile) onClick();
-      }}
+      onClick={() => { if (isMobile) onClick(); }}
+      onMouseEnter={() => { if (!isMobile) onHover(); }}
+      onMouseLeave={() => { if (!isMobile) onLeave(); }}
     >
       <div className="w-[280px] h-[354px] sm:w-[180px] sm:h-[254px]  overflow-hidden rounded-md bg-white shadow-md">
         <div className="sm:scale-[0.23] scale-[0.36] origin-top-left pointer-events-none">

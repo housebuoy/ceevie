@@ -1,15 +1,15 @@
 // components/ui/SidebarNav.tsx
 import {
-  MdPerson, MdShortText, MdPublic, MdSchool, MdWork, MdStar, MdCardMembership,
+  MdPerson, MdShortText, MdSchool, MdWork, MdStar, MdCardMembership,
   MdTranslate, MdEmojiEvents, MdInterests, MdBuild, MdMenuBook, MdVolunteerActivism,
-  MdContactMail, MdOutlinePlaylistAdd 
+  MdContactMail, MdOutlinePlaylistAdd, MdShare 
 } from "react-icons/md";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 const sections = [
   { key: "basics", label: "Basic", icon: <MdPerson size={18} /> },
   { key: "summary", label: "Summary", icon: <MdShortText size={18} /> },
-  { key: "profiles", label: "Profiles", icon: <MdPublic size={18} /> },
+  { key: "profiles", label: "Profiles", icon: <MdShare  size={18} /> },
   { key: "education", label: "Education", icon: <MdSchool size={18} /> },
   { key: "experience", label: "Experience", icon: <MdWork size={18} /> },
   { key: "skills", label: "Skills", icon: <MdStar size={18} /> },

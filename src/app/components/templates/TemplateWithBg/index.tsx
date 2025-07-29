@@ -1,5 +1,5 @@
 import React from "react";
-import { Resume } from "@/types/resume";
+import { useResume } from "@/context/ResumeContext";
 import {
   FiMapPin,
   FiPhone,
@@ -8,13 +8,22 @@ import {
   FiGithub,
   FiLinkedin,
   FiAward,
-  FiGlobe
+  FiGlobe,
+  FiTwitter,
+  FiFacebook,
+  FiInstagram,
+  FiDribbble,
+  FiCamera,
+  FiYoutube,
+  FiEdit3
 } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaLink } from "react-icons/fa6";
+import { format } from "date-fns";
 
 
-export function ModernResume({ resume }: { resume: Resume }) {
+export function ModernResume() {
+  const { resume } = useResume();
   return (
     <div className="w-[794px] h-[1123px] bg-white text-black font-sans text-sm flex">
       {/* Left Sidebar */}
@@ -31,20 +40,59 @@ export function ModernResume({ resume }: { resume: Resume }) {
 
         {/* Contact */}
         <div className="mt-6 space-y-2 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiMapPin /></span> <span>{resume.contact.location}</span>
+          {/* Default contact fields */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiMapPin /></span>
+            <span>{resume.contact.location}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiPhone /></span> <span>{resume.contact.phone}</span>
+            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiPhone /></span>
+            <span>{resume.contact.phone}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiMail /></span> <span>{resume.contact.email}</span>
+            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiMail /></span>
+            <span>{resume.contact.email}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiLink /></span> <span>{resume.contact.website}</span>
+            <span className="p-1 rounded-full bg-white/10 inline-flex items-center"><FiLink /></span>
+            <span>{resume.contact.website}</span>
           </div>
-        </div>
 
+          {/* Custom contact fields styled consistently */}
+          {resume.contact?.customFields && resume.contact.customFields.length > 0 && (
+            <>
+              {resume.contact.customFields.map((field, i) => {
+                const label = field.label.toLowerCase();
+                let Icon = null;
+
+                if (label.includes("github")) Icon = FiGithub;
+                else if (label.includes("linkedin")) Icon = FiLinkedin;
+                else if (label.includes("twitter")) Icon = FiTwitter;
+                else if (label.includes("facebook")) Icon = FiFacebook;
+                else if (label.includes("instagram")) Icon = FiInstagram;
+                else if (label.includes("dribbble")) Icon = FiDribbble;
+                else if (label.includes("behance")) Icon = FiCamera;
+                else if (label.includes("youtube")) Icon = FiYoutube;
+                else if (label.includes("medium")) Icon = FiEdit3;
+                else if (label.includes("website") || label.includes("portfolio")) Icon = FiLink;
+                else if (label.includes("phone") || label.includes("mobile")) Icon = FiPhone;
+                else if (label.includes("email")) Icon = FiMail;
+                else if (label.includes("location") || label.includes("address")) Icon = FiMapPin;
+                else Icon = FiLink; // fallback             
+
+                return (
+                  <div key={field.key || i} className="flex flex-wrap items-center gap-2">
+                    <span className="p-1 rounded-full bg-white/10 inline-flex items-center">
+                      {Icon ? <Icon /> : <FiLink />}
+                    </span>
+                    <span className="font-semibold">{field.label}:</span>
+                    <span className="break-all">{field.value}</span>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </div>
         {/* Profiles */}
         <div className="mt-6 text-xs">
           <h3 className="font-bold text-white mb-1">Profiles</h3>
@@ -137,7 +185,10 @@ export function ModernResume({ resume }: { resume: Resume }) {
         {/* Summary */}
         <section>
           <h3 className="text-lg font-bold border-b border-gray-300 pb-1">Summary</h3>
-          <p className="mt-2 text-sm">{resume.summary}</p>
+          <div
+            className="mt-2 text-sm prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: resume.summary || "" }}
+          />
         </section>
 
         {/* Experience */}
@@ -165,31 +216,55 @@ export function ModernResume({ resume }: { resume: Resume }) {
                 </a>
               )}
               <p className="text-xs text-gray-500">{exp.location}</p>
-              <ul className="list-disc ml-5 text-sm mt-1 space-y-1">
-                {exp.highlights.map((point, j) => (
-                  <li key={j}>{point}</li>
-                ))}
-              </ul>
+                {exp.description && (
+                  <div
+                    className="text-xs mt-2 ml-3"
+                    dangerouslySetInnerHTML={{ __html: exp.description }}
+                  />
+                )}
             </div>
           ))}
         </section>
 
         {/* Education */}
-        <section>
-          <h3 className="text-lg font-bold border-b border-gray-300 pb-1">Education</h3>
-          {resume.education.map((edu, i) => (
-            <div key={i} className="mt-2">
-              <div className=" font-semibold">
-                <span>{edu.school}</span>
+          <section>
+            <h3 className="text-lg font-bold border-b border-gray-300 pb-1">Education</h3>
+            {resume.education.map((edu, i) => (
+              <div key={i} className="mt-2">
+                <div className="font-semibold flex items-center gap-2">
+                  <span>{edu.school}</span>
+                  {edu.url && (
+                    <a
+                      href={edu.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline ml-2"
+                      title={edu.url}
+                    >
+                      <FiLink className="inline" />
+                    </a>
+                  )}
+                </div>
+                <div className="flex justify-between">
+                  <p className="text-sm font-medium text-gray-600">{edu.degree}</p>
+                  <span className="font-medium text-gray-600 text-xs">
+                    {edu.startDate ? format(edu.startDate, "yyyy") : ""}
+                    {edu.endDate ? ` to ${format(edu.endDate, "yyyy")}` : ""}
+                  </span>
+                </div>
+                {edu.location && (
+                  <p className="text-xs text-gray-500">{edu.location}</p>
+                )}
+                {/* Render summary as rich text */}
+                {edu.summary && (
+                  <div
+                    className="text-xs text-gray-700 mt-1 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: edu.summary }}
+                  />
+                )}
               </div>
-              <div className="flex justify-between">
-                <p className="text-sm font-medium text-gray-600">{edu.degree}</p>
-                <span className="font-medium text-gray-600 text-xs">{edu.startDate} to {edu.endDate}</span>
-              </div>              
-              <p className="text-xs text-gray-500">{edu.location}</p>
-            </div>
-          ))}
-        </section>
+            ))}
+          </section>
 
         {/* Projects */}
         <section>
@@ -206,6 +281,7 @@ export function ModernResume({ resume }: { resume: Resume }) {
             <p>No projects provided.</p>
           )}
         </section>
+        
       </main>
     </div>
   );

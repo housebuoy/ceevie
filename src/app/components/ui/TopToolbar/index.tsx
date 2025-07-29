@@ -12,9 +12,9 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-
+import { useEditorContext } from "@/context/EditorContext";
 
 const fonts = ["Inter", "Merriweather", "Roboto", "Montserrat"];
 const fontSizes = [10, 11, 12, 14, 16, 18, 20];
@@ -22,21 +22,58 @@ const layouts = ["One Column", "Two Column"];
 const themes = ["Dark", "Light", "Blue", "Green"];
 
 export default function TopToolbar() {
-
+  const { editors, activeEditorKey } = useEditorContext();
+  const activeEditor = editors[activeEditorKey];
   const [font, setFont] = useState(fonts[0]);
   const [fontSize, setFontSize] = useState(fontSizes[1]);
   const [layout, setLayout] = useState(layouts[0]);
   const [theme, setTheme] = useState(themes[0]);
+  //eslint-disable-next-line
+  const [_, setRerender] = useState(0);
+
+  // Force re-render on editor state change
+  useEffect(() => {
+    if (!activeEditor) return;
+    const update = () => setRerender(r => r + 1);
+    activeEditor.on('transaction', update);
+    return () => {
+      activeEditor.off('transaction', update);
+    };
+  }, [activeEditor]);
+
+  const handleBold = () => {
+    if (activeEditor) {
+      activeEditor.chain().focus().toggleBold().run();
+    } else {
+      console.warn("No active editor found", { editors, activeEditorKey });
+    }
+  };
+
+  const handleItalic = () => {
+    if (activeEditor) {
+      activeEditor.chain().focus().toggleItalic().run();
+    } else {
+      console.warn("No active editor found", { editors, activeEditorKey });
+    }
+  };
+
+  const handleUnderline = () => {
+    if (activeEditor) {
+      activeEditor.chain().focus().toggleUnderline().run();
+    } else {
+      console.warn("No active editor found", { editors, activeEditorKey });
+    }
+  };
 
   return (
     <div className="bg-[#181818] border-b border-[#232323] fixed top-0 left-0 w-full z-50">
       {/* Top Row: App Name and Menus */}
       <div className="flex items-center px-4 py-2">
         <Image
-            src="/images/logo/Ceevie.png"
-            alt="logo"
-            width={30}
-            height={30}
+          src="/images/logo/Ceevie.png"
+          alt="logo"
+          width={30}
+          height={30}
         />
         <span className="font-bold text-lg text-white mr-6">Ceevie</span>
         <nav className="flex gap-4 text-sm text-gray-300">
@@ -51,7 +88,7 @@ export default function TopToolbar() {
         <div className="ml-auto flex items-center gap-2">
           <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-full transition">Share</button>
           {/* eslint-disable-next-line */}
-          <img src="https://avatars.githubusercontent.com/u/144398545?s=48&v=4" width={54}height={54} alt="User" className="w-8 h-8 rounded-full ml-2" />
+          <img src="https://avatars.githubusercontent.com/u/144398545?s=48&v=4" width={54} height={54} alt="User" className="w-8 h-8 rounded-full ml-2" />
         </div>
       </div>
       {/* Toolbar Row */}
@@ -61,46 +98,94 @@ export default function TopToolbar() {
         <ToolbarButton tooltip="Print"><MdPrint size={20} /></ToolbarButton>
         <span className="mx-2 text-gray-500">|</span>
         <Dropdown
-            label={<MdViewModule size={20} />}
-            value={layout}
-            options={layouts}
-            onChange={v => setLayout(String(v))}
-            tooltip="Layout"
+          label={<MdViewModule size={20} />}
+          value={layout}
+          options={layouts}
+          onChange={v => setLayout(String(v))}
+          tooltip="Layout"
         />
         <Dropdown
-            label={<MdPalette size={20} />}
-            value={theme}
-            options={themes}
-            onChange={v => setTheme(String(v))}
-            tooltip="Theme"
+          label={<MdPalette size={20} />}
+          value={theme}
+          options={themes}
+          onChange={v => setTheme(String(v))}
+          tooltip="Theme"
         />
         <span className="mx-2 text-gray-500">|</span>
         <Dropdown
-            label={font}
-            value={font}
-            options={fonts}
-            onChange={v => setFont(String(v))}
-            tooltip="Font"
-            fontDropdown
+          label={font}
+          value={font}
+          options={fonts}
+          onChange={v => setFont(String(v))}
+          tooltip="Font"
+          fontDropdown
         />
         <Dropdown
-            label={fontSize}
-            value={fontSize}
-            options={fontSizes}
-            onChange={v => setFontSize(Number(v))}
-            tooltip="Font Size"
+          label={fontSize}
+          value={fontSize}
+          options={fontSizes}
+          onChange={v => setFontSize(Number(v))}
+          tooltip="Font Size"
         />
-        <ToolbarButton tooltip="Bold"><MdFormatBold size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Italic"><MdFormatItalic size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Underline"><MdFormatUnderlined size={20} /></ToolbarButton>
+        <ToolbarButton
+          tooltip="Bold"
+          onClick={handleBold}
+          active={!!activeEditor?.isActive("bold")}
+        >
+          <MdFormatBold size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Italic"
+          onClick={handleItalic}
+          active={!!activeEditor?.isActive("italic")}
+        >
+          <MdFormatItalic size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Underline"
+          onClick={handleUnderline}
+          active={!!activeEditor?.isActive("underline")}
+        >
+          <MdFormatUnderlined size={20} />
+        </ToolbarButton>
         <ToolbarButton tooltip="Link"><MdLink size={20} /></ToolbarButton>
         <ToolbarButton tooltip="Image"><MdImage size={20} /></ToolbarButton>
         <span className="mx-2 text-gray-500">|</span>
-        <ToolbarButton tooltip="Align Left"><MdFormatAlignLeft size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Align Center"><MdFormatAlignCenter size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Align Right"><MdFormatAlignRight size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Bulleted List"><MdFormatListBulleted size={20} /></ToolbarButton>
-        <ToolbarButton tooltip="Numbered List"><MdFormatListNumbered size={20} /></ToolbarButton>
+        <ToolbarButton
+          tooltip="Align Left"
+          onClick={() => activeEditor?.chain().focus().setTextAlign('left').run()}
+          active={!!activeEditor?.isActive({ textAlign: 'left' })}
+        >
+          <MdFormatAlignLeft size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Align Center"
+          onClick={() => activeEditor?.chain().focus().setTextAlign('center').run()}
+          active={!!activeEditor?.isActive({ textAlign: 'center' })}
+        >
+          <MdFormatAlignCenter size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Align Right"
+          onClick={() => activeEditor?.chain().focus().setTextAlign('right').run()}
+          active={!!activeEditor?.isActive({ textAlign: 'right' })}
+        >
+          <MdFormatAlignRight size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Bulleted List"
+          onClick={() => activeEditor?.chain().focus().toggleBulletList().run()}
+          active={!!activeEditor?.isActive('bulletList')}
+        >
+          <MdFormatListBulleted size={20} />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="Numbered List"
+          onClick={() => activeEditor?.chain().focus().toggleOrderedList().run()}
+          active={!!activeEditor?.isActive('orderedList')}
+        >
+          <MdFormatListNumbered size={20} />
+        </ToolbarButton>
         <span className="mx-2 text-gray-500">|</span>
         <ToolbarButton tooltip="Download"><MdCloudDownload size={20} /></ToolbarButton>
       </div>
@@ -112,15 +197,22 @@ export default function TopToolbar() {
 function ToolbarButton({
   tooltip,
   children,
+  onClick,
+  active = false,
 }: {
   tooltip: string;
   children: React.ReactNode;
+  onClick?: () => void;
+  active?: boolean;
 }) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <button
-          className="p-2 rounded hover:bg-[#232323] transition"
+          className={`p-2 rounded transition ${
+            active ? "bg-indigo-600 text-white" : "hover:bg-[#232323]"
+          }`}
+          onClick={onClick}
           tabIndex={0}
         >
           {children}
@@ -133,7 +225,6 @@ function ToolbarButton({
   );
 }
 
-
 type DropdownProps = {
   label: React.ReactNode;
   value: string | number;
@@ -144,8 +235,6 @@ type DropdownProps = {
 };
 
 function Dropdown({ label, value, options, onChange, tooltip, fontDropdown }: DropdownProps) {
-
-
   return (
     <DropdownMenu>
       <Tooltip>
@@ -184,6 +273,5 @@ function Dropdown({ label, value, options, onChange, tooltip, fontDropdown }: Dr
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-
   );
 }
