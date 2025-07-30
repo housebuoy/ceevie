@@ -19,97 +19,193 @@
     },
     {
       "platform": "Stack Overflow",
-      "url": "https://stackoverflow.com/quarcoo",
+      "url": "https://stackoverflow.com/users/1234567/howmw",
       "username": "howmw"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/kelvinquarcoo",
+      "username": "kelvinquarcoo"
     }
   ],
-"education": [
-  {
-    "school": "University of Ghana",
-    "location": "Accra, Ghana",
-    "degree": "BSc Computer Science",
-    "startDate": "2020",
-    "endDate": "2024",
-    "honors": "First Class Honors",
-    "relevantCoursework": [
-      "Data Structures & Algorithms",
-      "Web Development",
-      "Database Systems",
-      "Artificial Intelligence"
-    ]
-  },
-  {
-    "school": "FreeCodeCamp",
-    "location": "Online",
-    "degree": "Full Stack JavaScript Certification",
-    "startDate": "2022",
-    "endDate": "2023",
-    "url": "https://freecodecamp.org/certification/fcc123456789/javascript-algorithms-and-data-structures"
-  }
-],
+  "education": [
+    {
+      "school": "University of Ghana",
+      "location": "Accra, Ghana",
+      "degree": "BSc Computer Science",
+      "startDate": "2020",
+      "endDate": "2024",
+      "honors": "First Class Honors",
+      "relevantCoursework": [
+        "Data Structures & Algorithms",
+        "Web Development",
+        "Database Systems",
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "school": "FreeCodeCamp",
+      "location": "Online",
+      "degree": "Full Stack JavaScript Certification",
+      "startDate": "2022",
+      "endDate": "2023",
+      "url": "https://freecodecamp.org/certification/fcc123456789/javascript-algorithms-and-data-structures"
+    }
+  ],
   "experience": [
-  {
-    "company": "TechBridge Africa",
-    "role": "Frontend Developer Intern",
-    "startDate": "Jun 2023",
-    "endDate": "Sep 2023",
-    "location": "Accra, Ghana (Remote)",
-    "url": "https://techbridgeafrica.org",
-    "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
-    "highlights": [
-    "Built and maintained reusable React components",
-    "Implemented responsive layouts with Tailwind CSS",
-    "Collaborated with backend developers on API integration"
-    ]
-},
-  {
-    "company": "DevHub Africa",
-    "role": "Junior Frontend Developer",
-    "startDate": "Oct 2023",
-    "endDate": "Present",
-    "location": "Lagos, Nigeria (Hybrid)",
-    "url": "https://devhubafrica.com",
-    "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
-    "highlights": [
-      "Led migration from JavaScript to TypeScript across 3 major projects",
-      "Implemented CI/CD pipelines reducing deployment time by 60%",
-      "Mentored 2 new interns on React best practices",
-      "Designed and implemented a component library used by 15+ developers"
-    ]
-  }
-],
-"skills": [
-  {
-    "category": "Frontend",
-    "level": "Advanced",
-    "items": ["React", "Next.js", "Tailwind CSS"]
-  },
-  {
-    "category": "Languages",
-    "level": "Proficient",
-    "items": ["JavaScript", "TypeScript"]
-  }
-],
+    {
+      "company": "TechBridge Africa",
+      "role": "Frontend Developer Intern",
+      "startDate": "Jun 2023",
+      "endDate": "Sep 2023",
+      "location": "Accra, Ghana (Remote)",
+      "url": "https://techbridgeafrica.org",
+      "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
+      "highlights": [
+        "Built and maintained reusable React components",
+        "Implemented responsive layouts with Tailwind CSS",
+        "Collaborated with backend developers on API integration"
+      ]
+    },
+    {
+      "company": "DevHub Africa",
+      "role": "Junior Frontend Developer",
+      "startDate": "Oct 2023",
+      "endDate": "Present",
+      "location": "Lagos, Nigeria (Hybrid)",
+      "url": "https://devhubafrica.com",
+      "description": "Built and maintained reusable React components, implemented responsive layouts with Tailwind CSS, and collaborated with backend developers on API integration.",
+      "highlights": [
+        "Led migration from JavaScript to TypeScript across 3 major projects",
+        "Implemented CI/CD pipelines reducing deployment time by 60%",
+        "Mentored 2 new interns on React best practices",
+        "Designed and implemented a component library used by 15+ developers"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Frontend",
+      "level": "Advanced",
+      "items": ["React", "Next.js", "Tailwind CSS", "Redux", "Framer Motion"]
+    },
+    {
+      "category": "Languages",
+      "level": "Proficient",
+      "items": ["JavaScript", "TypeScript", "HTML5", "CSS3"]
+    },
+    {
+      "category": "Testing",
+      "level": "Intermediate",
+      "items": ["Jest", "React Testing Library", "Cypress"]
+    },
+    {
+      "category": "DevOps",
+      "level": "Beginner",
+      "items": ["GitHub Actions", "Vercel", "Netlify"]
+    }
+  ],
   "projects": [
     {
       "title": "Resume Builder App",
       "description": "A web application that allows users to build professional resumes using dynamic templates.",
       "url": "https://ceevie.vercel.app",
       "role": "Lead Developer"
+    },
+    {
+      "title": "Open Source Ghana",
+      "description": "A platform to connect Ghanaian developers with open source projects.",
+      "url": "https://opensourceghana.org",
+      "role": "Contributor"
     }
   ],
-  "certifications": ["Google UX Design – 2022", "Meta Front-End Professional – 2023"],
+  "certifications": [
+    {
+      "name": "Certified React Developer",
+      "date": "2023-05-15"
+    },
+    {
+      "name": "Full Stack Web Development",
+      "date": "2022-11-20"
+    },
+    {
+      "name": "AWS Cloud Practitioner",
+      "date": "2023-03-10"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Best Frontend Project",
+      "issuer": "TechBridge Africa",
+      "date": "2023-09-01",
+      "description": "Awarded for building the most innovative frontend project during the summer internship."
+    },
+    {
+      "title": "Dean's List",
+      "issuer": "University of Ghana",
+      "date": "2022-12-01",
+      "description": "Recognized for outstanding academic performance."
+    }
+  ],
   "languages": [
-  { "name": "English", "proficiency": "Native" },
-  { "name": "French", "proficiency": "Intermediate" },
-  { "name": "Twi", "proficiency": "Fluent" }
-],
-  "hobbies": ["Reading", "Hackathons", "Volunteering"],
+    { "name": "English", "proficiency": "Native" },
+    { "name": "French", "proficiency": "Intermediate" },
+    { "name": "Twi", "proficiency": "Fluent" }
+  ],
+  "hobbies": [
+    "Reading",
+    "Hackathons",
+    "Volunteering",
+    "Photography",
+    "Traveling"
+  ],
+  "interests": [
+    "UI/UX Design",
+    "Open Source",
+    "Machine Learning",
+    "Startups",
+    "Public Speaking"
+  ],
+  "publications": [
+    {
+      "title": "Building Accessible React Apps",
+      "publisher": "Dev.to",
+      "date": "2023-07-15",
+      "url": "https://dev.to/quarcoo/building-accessible-react-apps-1234"
+    },
+    {
+      "title": "State Management in Modern React",
+      "publisher": "Medium",
+      "date": "2022-10-10",
+      "url": "https://medium.com/@quarcoo/state-management-modern-react"
+    }
+  ],
+  "volunteering": [
+    {
+      "organization": "Code for Ghana",
+      "role": "Mentor",
+      "startDate": "2022-01",
+      "endDate": "2023-06",
+      "description": "Mentored high school students in web development and coding best practices."
+    },
+    {
+      "organization": "Tech4Girls",
+      "role": "Workshop Facilitator",
+      "startDate": "2021-05",
+      "endDate": "2022-08",
+      "description": "Organized and led coding workshops for young girls interested in technology."
+    }
+  ],
   "references": [
     {
       "name": "Jane Doe",
       "position": "CTO at DevX",
       "contact": "jane.doe@example.com"
+    },
+    {
+      "name": "Kwame Mensah",
+      "position": "Lead Engineer at TechBridge Africa",
+      "contact": "kwame.mensah@techbridgeafrica.org"
     }
   ]
 }

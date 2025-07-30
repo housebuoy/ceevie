@@ -14,6 +14,8 @@ import { Progress } from "@/components/ui/progress"; // ShadCN Progress
 import { cn } from "@/lib/utils"; // optional for class merging
 import { useAuth } from '@/context/AuthContext'
 import { MdFileCopy } from "react-icons/md";
+const [importedResume, setImportedResume] = useState<any>(null);
+const [step, setStep] = useState<"upload" | "imported">("upload");
 
 interface ImportResumeModalProps {
   initialFile?: File | null;

@@ -15,6 +15,13 @@ import { FiZoomIn, FiZoomOut } from "react-icons/fi";
 import { TbZoomReset } from "react-icons/tb";
 import SkillsPanel from "@/app/components/ui/sections/SkillsPanel";
 import LanguagesPanel from "@/app/components/ui/sections/LanguagesPanel";
+import AwardsPanel from "@/app/components/ui/sections/AwardsPanel";
+import CertificationsPanel from "@/app/components/ui/sections/CertificationsPanel";
+import InterestsPanel from "@/app/components/ui/sections/InterestsPanel";
+import ProjectsPanel from "@/app/components/ui/sections/ProjectsPanel";
+import ReferencesPanel from "@/app/components/ui/sections/ReferencesPanel";
+import PublicationsPanel from "@/app/components/ui/sections/PublicationsPanel";
+import VolunteeringPanel from "@/app/components/ui/sections/VolunteeringPanel";
 
 
 
@@ -41,7 +48,7 @@ export default function EditorPage() {
 
   // Load your resume data (replace with real data as needed)
   const resumeData: Resume = sampleData as Resume;
-console.log("template id: ",templateId)
+  console.log("template id: ",templateId)
   const sectionComponents: Record<string, React.ReactNode> = {
     basics: <BasicsPanel />,
     summary: <DynamicSummaryPanel />,
@@ -50,8 +57,13 @@ console.log("template id: ",templateId)
     experience: <DynamicExperiencePanel />,
     skills: <SkillsPanel />,
     languages: <LanguagesPanel />,
-    
-    // ...add other sections
+    awards: <AwardsPanel />,
+    certifications: <CertificationsPanel />,
+    interests: <InterestsPanel />,
+    projects: <ProjectsPanel />,
+    publications: <PublicationsPanel />,
+    volunteering: <VolunteeringPanel />,
+    references: <ReferencesPanel />,
   };
 
   return (

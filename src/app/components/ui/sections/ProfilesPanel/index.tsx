@@ -146,7 +146,9 @@ const handleCreate = () => {
   return (
     <section className="w-82 mx-auto">
       <div className="flex items-center gap-2 mb-4">
-        <FiShare2 size={25} className="text-white" />
+        <span className="bg-[#232323] rounded-full p-2">
+          <FiShare2 size={25} className="text-white" />
+        </span>
         <h2 className="text-2xl font-bold">Profiles</h2>
         <div className="ml-auto">
           <FiMenu size={22} className="text-gray-400" />

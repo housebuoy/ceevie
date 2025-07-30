@@ -121,7 +121,9 @@ export default function EducationPanel() {
   return (
     <section className="w-82 mx-auto">
       <div className="flex items-center gap-2 mb-4">
-        <MdSchool size={25} className="text-white" />
+        <span className="bg-[#232323] rounded-full p-2">
+          <MdSchool size={25} className="text-white" />
+        </span>
         <h2 className="text-2xl font-bold">Education</h2>
         <div className="ml-auto">
           <FiEdit3 size={22} className="text-gray-400" />

@@ -4,73 +4,77 @@ import { useResume } from "@/context/ResumeContext";
 import { FiMenu, FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaGripLinesVertical } from "react-icons/fa6";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
-import { MdTranslate } from "react-icons/md";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
-const proficiencies = [
-  "Native",
-  "Fluent",
-  "Advanced",
-  "Intermediate",
-  "Beginner",
-] as const;
-
-type Language = {
+type Certification = {
   name: string;
-  proficiency: typeof proficiencies[number];
+  date?: string;
 };
 
-export default function LanguagesPanel() {
+export default function CertificationsPanel() {
   const { resume, setResume } = useResume();
-  const languages: Language[] = resume.languages || [];
+  const certifications: Certification[] = resume.certifications || [];
   const [showDialog, setShowDialog] = useState(false);
-  const [newLang, setNewLang] = useState<Language>({
+  const [newCert, setNewCert] = useState<{ name: string; date: Date | null }>({
     name: "",
-    proficiency: "Fluent",
+    date: null,
   });
 
   // Drag-and-drop reorder
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const reordered = Array.from(languages);
+    const reordered = Array.from(certifications);
     const [removed] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, removed);
     setResume(prev => ({
       ...prev,
-      languages: reordered,
+      certifications: reordered,
     }));
   };
 
   const handleCreate = () => {
+    if (!newCert.name.trim()) return;
     setResume(prev => ({
       ...prev,
-      languages: [...(prev.languages || []), newLang],
+      certifications: [
+        ...(prev.certifications || []),
+        {
+          name: newCert.name.trim(),
+          date: newCert.date ? newCert.date.toISOString().split("T")[0] : undefined,
+        },
+      ],
     }));
     setShowDialog(false);
-    setNewLang({ name: "", proficiency: "Fluent" });
+    setNewCert({ name: "", date: null });
   };
 
   const handleDelete = (idx: number) => {
     setResume(prev => ({
       ...prev,
-      languages: prev.languages?.filter((_, i) => i !== idx),
+      certifications: prev.certifications?.filter((_, i) => i !== idx),
     }));
   };
 
   return (
     <section className="w-82 mx-auto">
       <div className="flex items-center gap-2 mb-4">
-        <MdTranslate size={22} className="text-white" />
-        <h2 className="text-3xl font-bold">Languages</h2>
+        <span className="bg-[#232323] rounded-full p-2">
+          <FiMenu size={22} className="text-white" />
+        </span>
+        <h2 className="text-3xl font-bold">Certifications</h2>
         <div className="ml-auto">
           <FiMenu size={22} className="text-gray-400" />
         </div>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="languages">
+        <Droppable droppableId="certifications">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-2 mb-4">
-              {languages.map((lang, idx) => (
+              {certifications.map((cert, idx) => (
                 <Draggable key={idx} draggableId={String(idx)} index={idx}>
                   {(provided) => (
                     <div
@@ -82,8 +86,12 @@ export default function LanguagesPanel() {
                         <FaGripLinesVertical className="text-gray-500" />
                       </span>
                       <div className="flex-1">
-                        <div className="font-bold text-white">{lang.name}</div>
-                        <div className="text-gray-400 text-sm">{lang.proficiency}</div>
+                        <div className="font-bold text-white">{cert.name}</div>
+                        {cert.date && (
+                          <div className="text-gray-400 text-xs">
+                            {cert.date}
+                          </div>
+                        )}
                       </div>
                       <button
                         className="ml-2 text-red-400 hover:text-red-600"
@@ -106,32 +114,38 @@ export default function LanguagesPanel() {
       {showDialog ? (
         <div className="bg-[#181818] border border-[#222] rounded p-6 mb-4">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold">Add Language</h3>
+            <h3 className="text-lg font-bold">Add Certification</h3>
             <button onClick={() => setShowDialog(false)} className="text-gray-400 hover:text-white text-xl">&times;</button>
           </div>
+          <input
+            className="w-full p-2 rounded bg-[#181818] border border-[#333] text-white mb-4"
+            value={newCert.name}
+            onChange={e => setNewCert(c => ({ ...c, name: e.target.value }))}
+            placeholder="e.g. AWS Certified Developer"
+          />
           <div className="mb-4">
-            <label className="block mb-1">Language</label>
-            <input
-              className="w-full p-2 rounded bg-[#181818] border border-[#333] text-white"
-              value={newLang.name}
-              onChange={e => setNewLang(l => ({ ...l, name: e.target.value }))}
-              placeholder="English"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-1">Proficiency</label>
-            <select
-              className="w-full p-2 rounded bg-[#181818] border border-[#333] text-white"
-              value={newLang.proficiency}
-              onChange={e => setNewLang(l => ({ ...l, proficiency: e.target.value as Language["proficiency"] }))}
-            >
-              {proficiencies.map(p => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
+            <label className="block mb-1">Date</label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-left font-normal bg-[#181818] border border-[#333] text-white"
+                >
+                  {newCert.date ? format(newCert.date, "PPP") : "Select Date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 bg-[#181818] border border-[#333]">
+                <Calendar
+                  mode="single"
+                  selected={newCert.date ?? undefined}
+                  onSelect={date => setNewCert(c => ({ ...c, date: date ?? null }))}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           <button
-            className="mt-4 bg-white text-black px-4 py-2 rounded"
+            className="mt-2 bg-white text-black px-4 py-2 rounded"
             onClick={handleCreate}
           >
             Add

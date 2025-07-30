@@ -158,3 +158,19 @@
 .text-xs ol {
   list-style-type: decimal;
 }
+
+.resume-page {
+    break-after: page;
+    page-break-after: always;
+    height: 1123px; /* or your page height */
+    overflow: hidden;
+  }
+
+@media print {
+  .resume-page {
+    break-after: page;
+    page-break-after: always;
+    height: 1123px;
+    overflow: hidden;
+  }
+}

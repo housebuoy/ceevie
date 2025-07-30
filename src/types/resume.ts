@@ -60,7 +60,16 @@ export interface Resume {
     proficiency: "Advanced" | "Native" | "Intermediate" | "Fluent" | "Beginner";
   }>;
   hobbies?: string[];
-  certifications?: string[];
+  certifications?: Array<{
+    name: string;
+    date?: string; // ISO string
+  }>;
+  awards?: Array<{
+    title: string;
+    issuer?: string;
+    date?: string;
+    description?: string;
+  }>;
   references?: Array<{
     name: string;
     position: string;
@@ -73,5 +82,20 @@ export interface Resume {
   customSections?: Array<{
     title: string;
     content: string;
+  }>;
+  publications?: Array<{
+    title: string;
+    publisher?: string;
+    date?: string;
+    url?: string;
+    description?: string;
+  }>;
+  volunteering?: Array<{
+    organization: string;
+    role: string;
+    startDate?: string;
+    endDate?: string;
+    url?: string;
+    description?: string;
   }>;
 }

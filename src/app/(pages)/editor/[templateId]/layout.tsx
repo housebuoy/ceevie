@@ -13,6 +13,7 @@ export default function EditorLayout({ children }: { children: React.ReactNode }
   const [editors, setEditors] = useState<Record<string, Editor | undefined>>({});
   const [activeEditorKey, setActiveEditorKey] = useState("summary");
   const [selectedSection, setSelectedSection] = useState("basics");
+  const [font, setFont] = useState("Inter");
 
   const setEditor = (key: string, editor: Editor) => {
     setEditors(prev => ({ ...prev, [key]: editor }));
@@ -28,11 +29,13 @@ export default function EditorLayout({ children }: { children: React.ReactNode }
           setActiveEditorKey,
           selectedSection,
           setSelectedSection,
+          font,
+          setFont,
         }}
       >
         <div className="flex flex-col h-screen w-full">
           <TopToolbar />
-          <div className="flex flex-1 pt-[92px]">
+          <div className="flex flex-1 pt-[45px]">
             <SidebarNav selected={selectedSection} onSelect={setSelectedSection} />
             <main className="flex-1 flex p-8 gap-8 overflow-hidden">
               {children}

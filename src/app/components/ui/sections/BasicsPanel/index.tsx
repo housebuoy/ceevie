@@ -89,7 +89,7 @@ export default function BasicsPanel() {
   return (
     <section className="w-82 mx-auto">
       <div className="flex items-center gap-2 mb-2">
-        <MdPerson size={25} className="text-white" />
+        <span className="bg-[#232323] rounded-full p-2"><MdPerson size={25} className="text-white" /></span>
         <h2 className="text-2xl font-bold">Basics</h2>
       </div>
 

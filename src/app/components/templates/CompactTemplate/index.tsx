@@ -44,7 +44,7 @@ export default function CompactResume() {
                 <p className="font-medium">{exp.role}, {exp.startDate} – {exp.endDate}</p>
                 <p className="text-xs">{exp.company} – {exp.location}</p>
                 <ul className="list-disc list-inside mt-1 text-sm">
-                  {exp.highlights.map((point, i) => (
+                  {exp.highlights?.map((point, i) => (
                     <li key={i}>{point}</li>
                   ))}
                 </ul>

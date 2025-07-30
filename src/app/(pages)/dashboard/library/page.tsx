@@ -29,7 +29,7 @@ const Page = () => {
                 onLeave={handleCardLeave}
                 onClick={() => handleCardClick(tpl.id)}
                 onCLickRouter={() => router.push(`/editor/${tpl.id}`)}
-              >
+              >                
                 <tpl.component resume={resumeData} />
               </TemplateCard>
             ))}

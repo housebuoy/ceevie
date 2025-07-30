@@ -52,7 +52,9 @@ export default function SkillsPanel() {
   return (
     <section className="w-82 mx-auto">
       <div className="flex items-center gap-2 mb-4">
-        <MdStar size={25} />
+        <span className="bg-[#232323] rounded-full p-2">
+            <MdStar size={25} />
+        </span>
         <h2 className="text-3xl font-bold">Skills</h2>
         {/* <div className="ml-auto">
             <MdStar size={25} />

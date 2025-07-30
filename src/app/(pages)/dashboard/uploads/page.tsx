@@ -5,6 +5,7 @@ import { IoCloudUploadOutline, IoClose } from "react-icons/io5";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { BsFiletypePdf, BsFiletypeDocx, BsFiletypeJson   } from "react-icons/bs";
 
 export default function ResumeDashboard() {
   const { appUser } = useAuth();
@@ -152,9 +153,9 @@ export default function ResumeDashboard() {
                     className="border-t border-[#222] hover:bg-[#222] odd:bg-[#111] even:bg-[#1a1a1a]"
                   >
                     <td className="py-2 flex items-center gap-2 px-4">
-                      {file.fileType === "pdf" && <span className="text-red-400">📄</span>}
-                      {file.fileType === "docx" && <span className="text-blue-400">📄</span>}
-                      {file.fileType === "json" && <span className="text-green-400">🗎</span>}
+                      {file.fileType === "pdf" && <span className="text-red-400"><BsFiletypePdf /></span>}
+                      {file.fileType === "docx" && <span className="text-blue-400"><BsFiletypeDocx /></span>}
+                      {file.fileType === "json" && <span className="text-green-400"><BsFiletypeJson /></span>}
                       {file.originalName}
                     </td>
                     <td className="px-4 py-3">{(file.fileSize / 1024 / 1024).toFixed(2)} MB</td>
